@@ -1,5 +1,4 @@
-angular.module('flapperNews', ['ui.router', 'templates', 'Devise'])
-.config([
+angular.module('flapperNews', ['ui.router', 'templates', 'Devise']).config([
 '$stateProvider',
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
@@ -10,22 +9,23 @@ function($stateProvider, $urlRouterProvider) {
       templateUrl: 'home/_home.html',
       controller: 'MainCtrl',
       resolve: {
-        postPromise: ['posts', function(posts){
-          return posts.getAll();
-        }]
-      }
-    })
-    .state('posts', {
-      url: '/posts/{id}',
-      templateUrl: 'posts/_posts.html',
-      controller: 'PostsCtrl',
+        postPromise: ['posts', 
+          function(posts){
+            return posts.getAll();
+          }]
+		  }})
+
+		.state('posts', {
+		  url: '/posts/{id}',
+		  templateUrl: 'posts/_posts.html',
+		  controller: 'PostsCtrl',
       resolve: {
         post: ['$stateParams', 'posts', function($stateParams, posts) {
           return posts.get($stateParams.id);
         }]
-      }
-
+      }      
     })
+
     .state('login', {
       url: '/login',
       templateUrl: 'auth/_login.html',
@@ -46,6 +46,6 @@ function($stateProvider, $urlRouterProvider) {
         })
       }]
     });
-
+    
   $urlRouterProvider.otherwise('home');
 }]);
